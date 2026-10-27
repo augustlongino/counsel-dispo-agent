@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disposition agent demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16233B;--body:#3E4A5C;--muted:#6A7280;--paper:#F6F3EE;--card:#FFFDF9;--line:#DCD4C7;--band:#EDE7DE;--accent:#B4561C;
+--emerg:#A3341F;--h48:#B4561C;--async:#2F6F9F;--self:#4A7A4E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 'IBM Plex Sans',system-ui,sans-serif}
+header{background:var(--ink);color:var(--paper);padding:18px 32px;display:flex;align-items:baseline;gap:20px}
+header h1{font:600 26px 'Source Serif 4',Georgia,serif;margin:0}
+header p{margin:0;color:#C9D3E0;font-size:15px}
+main{padding:24px 32px;max-width:1800px;margin:0 auto}
+.input{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.chip:hover,.chip.on{border-color:var(--accent);color:var(--accent)}
+select{font:inherit;font-size:15px;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);max-width:420px}
+textarea{width:100%;font:inherit;font-size:19px;padding:14px;border:1px solid var(--line);border-radius:10px;background:#fff;resize:vertical;min-height:110px;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+label{display:flex;gap:6px;align-items:center;font-size:15px;color:var(--body);cursor:pointer}
+button.go{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 26px;font:600 17px 'IBM Plex Sans',sans-serif;cursor:pointer}
+button.go:disabled{opacity:.5;cursor:default}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:20px;margin-top:22px;align-items:start}
+.col{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.col h2{margin:0;padding:14px 18px;font:600 20px 'IBM Plex Sans',sans-serif;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline}
+.col h2 small{font-weight:400;color:var(--muted);font-size:13px}
+.verdict{padding:16px 18px;color:#fff;display:flex;flex-direction:column;gap:2px}
+.verdict b{font:600 28px 'Source Serif 4',Georgia,serif}
+.verdict span{font-size:14px;opacity:.9}
+.EMERGENCY_NOW{background:var(--emerg)}.WITHIN_48H{background:var(--h48)}.ASYNC_PHYSICIAN{background:var(--async)}.SELF_CARE{background:var(--self)}
+.pending{padding:28px 18px;color:var(--muted)}
+.step{padding:14px 18px;border-top:1px solid var(--line)}
+.step h3{margin:0 0 8px;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);font-weight:600}
+.step ul{margin:0;padding-left:18px}
+.step li{margin:3px 0}
+.q{color:var(--muted);font-style:italic}
+.neg{color:var(--body)}
+.down{color:var(--muted);text-decoration:line-through}
+.flag{color:var(--emerg);font-size:13px}
+.reply{white-space:pre-wrap;background:var(--band);border-radius:10px;padding:12px 14px}
+.err{color:var(--emerg);padding:18px}
+.clarify{margin-top:22px;background:var(--card);border:2px solid var(--accent);border-radius:14px;padding:20px;display:none;flex-direction:column;gap:12px}
+.clarify h2{margin:0;font:600 20px 'IBM Plex Sans',sans-serif}
+.raised{font-size:14px;padding:6px 18px;background:var(--band)}
+@media (max-width:700px){main{padding:16px}header{padding:14px 16px;flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<header><h1>Disposition agent</h1><p>Synthetic messages only. Triage, not advice.</p></header>
+<main>
+<section class="input">
+  <div class="chips" id="script"></div>
+  <div class="row"><select id="picker"><option value="">Any eval case…</option></select>
+    <span style="color:var(--muted);font-size:14px">or type a new message below</span></div>
+  <textarea id="msg" placeholder="Patient message"></textarea>
+  <div class="row">
+    <label><input type="checkbox" id="m-agent" checked> Agent</label>
+    <label><input type="checkbox" id="m-baseline" checked> Claude alone</label>
+    <label><input type="checkbox" id="m-no_rules"> Agent without rules</label>
+    <label title="Replay the newest eval run instead of calling the API"><input type="checkbox" id="saved"> Saved run</label>
+    <button class="go" id="go">Triage</button>
+  </div>
+</section>
+<div class="cols" id="cols"></div>
+<section class="clarify" id="clarify">
+  <h2>Patient replies to the questions</h2>
+  <textarea id="answer" placeholder="Type the patient's answer"></textarea>
+  <div class="row"><button class="go" id="send">Send reply</button>
+  <span style="color:var(--muted);font-size:14px">The answer is added to the message. The bucket can go up, never down.</span></div>
+</section>
+</main>
+<script>
+const MODES={agent:"Agent",baseline:"Claude alone",no_rules:"Agent without rules"};
+const LABEL={EMERGENCY_NOW:"Emergency now",WITHIN_48H:"Seen within 48 hours",ASYNC_PHYSICIAN:"Physician, async",SELF_CARE:"Self-care"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let last={message:"",results:{}};
+
+fetch("/api/cases").then(r=>r.json()).then(d=>{
+  d.script.forEach(c=>{const b=document.createElement("button");b.className="chip";b.textContent=`${c.id} · ${c.label}`;
+    b.onclick=()=>{$("msg").value=c.message;document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));b.classList.add("on")};$("script").append(b)});
+  d.all.forEach(c=>{const o=document.createElement("option");o.value=c.message;o.textContent=`${c.id}${c.saved?"":" (no saved run)"} · ${c.message.slice(0,70)}…`;$("picker").append(o)});
+});
+$("picker").onchange=e=>{if(e.target.value)$("msg").value=e.target.value};
+
+function facts(f){
+  const pos=[],neg=[];
+  for(const g of ["context","findings"])for(const [k,v] of Object.entries(f?.[g]||{})){
+    if(v.status==="not_mentioned")continue;
+    const li=`<li class="${v.status==="denied"?"neg":""}">${esc(k.replaceAll("_"," "))}${v.ungrounded?' <span class="flag">no quote, kept</span>':""}<br><span class="q">“${esc((v.evidence||[]).join("; "))}”</span></li>`;
+    (v.status==="present"?pos:neg).push(li);
+  }
+  return {pos,neg};
+}
+function card(mode,o){
+  if(o.error)return `<div class="err">${esc(o.error)}</div>`;
+  let h=`<div class="verdict ${o.disposition}"><b>${LABEL[o.disposition]||o.disposition}</b><span>${o.status||""}${o.lane&&o.lane!=="none"?" · "+o.lane+" lane":""}${o.needs_human?" · model failed, sent to a physician":""} · ${o.seconds}s · ${esc(o.source)}</span></div>`;
+  if(o.prior_disposition)h+=`<div class="raised">Before the reply: ${LABEL[o.prior_disposition]}. With the reply: ${LABEL[o.answer_disposition]}. Shown: the higher.</div>`;
+  if(mode!=="baseline"){
+    const {pos,neg}=facts(o.raw_facts);
+    h+=`<div class="step"><h3>1 · The student presents</h3><p style="margin:0 0 6px">${esc(o.raw_facts?.chief_complaint||"")}</p>
+      <b>Pertinent positives</b><ul>${pos.join("")||"<li>none</li>"}</ul>
+      <b>Pertinent negatives</b><ul>${neg.join("")||"<li>none</li>"}</ul>
+      ${(o.minimizing_quotes||[]).length?`<b>Downplaying, logged and not used</b><ul>${o.minimizing_quotes.map(q=>`<li class="down">“${esc(q)}”</li>`).join("")}</ul>`:""}</div>`;
+    const rd=o.rule_detail||[];
+    h+=mode==="agent"
+      ?`<div class="step"><h3>2 · Guideline rules</h3>${rd.length?`<ul>${rd.map(r=>`<li><b>${r.id}</b> → ${LABEL[r.floor]}<br><span class="q">${esc(r.summary)}</span></li>`).join("")}</ul>`:"<p style='margin:0'>No rule fired.</p>"}<p style="margin:6px 0 0">Floor: <b>${LABEL[o.floor]}</b></p></div>`
+      :`<div class="step"><h3>2 · Rules hidden</h3><p style="margin:0">The judge sees no rules and there is no floor.${(o.shadow_rules||[]).length?` Would have fired: <b>${o.shadow_rules.join(", ")}</b> → ${LABEL[o.shadow_floor]}.`:" No rule would have fired."}</p></div>`;
+    h+=`<div class="step"><h3>3 · The attending decides</h3><p style="margin:0">Claude chose <b>${LABEL[o.llm_disposition]||"—"}</b>${mode==="agent"?(o.floor_overrode_llm?". The floor raised it.":". Final is the higher of floor and judgment."):"."}</p><p class="q" style="margin:6px 0 0">${esc(o.rationale)}</p></div>`;
+  }else{
+    h+=`<div class="step"><h3>One prompt</h3><p class="q" style="margin:0">${esc(o.rationale)}</p></div>`;
+  }
+  const qs=[...(o.clarifying_questions||[]),...(o.risk_modifier_question?[o.risk_modifier_question]:[])];
+  if(qs.length)h+=`<div class="step"><h3>Questions</h3><ol style="margin:0;padding-left:20px">${qs.map(q=>`<li>${esc(q)}</li>`).join("")}</ol></div>`;
+  h+=`<div class="step"><h3>Reply to the patient</h3><div class="reply">${esc(o.patient_reply)}</div></div>`;
+  if((o.errors||[]).length)h+=`<div class="err">${esc(o.errors.join("; "))}</div>`;
+  return h;
+}
+async function go(answer){
+  const message=answer?last.message:$("msg").value.trim();
+  if(!message)return;
+  const modes=Object.keys(MODES).filter(m=>$("m-"+m).checked);
+  $("go").disabled=$("send").disabled=true;$("clarify").style.display="none";
+  $("cols").innerHTML=modes.map(m=>`<div class="col"><h2>${MODES[m]}</h2><div class="pending" id="p-${m}">Working… <span id="t-${m}">0</span>s</div></div>`).join("");
+  const t0=Date.now(),timer=setInterval(()=>modes.forEach(m=>{const t=$("t-"+m);if(t)t.textContent=Math.round((Date.now()-t0)/1000)}),500);
+  const prior=last.results;
+  const results={};
+  await Promise.all(modes.map(async m=>{
+    const body={mode:m,message,saved:$("saved").checked};
+    if(answer){body.answer=answer;body.prior_disposition=prior[m]?.disposition}
+    let o;try{o=await (await fetch("/api/run",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})).json()}catch(e){o={error:String(e)}}
+    results[m]=o;$("p-"+m).outerHTML=card(m,o);
+  }));
+  clearInterval(timer);
+  if(!answer)last={message,results};
+  $("go").disabled=$("send").disabled=false;
+  const asked=Object.values(results).some(o=>(o.clarifying_questions||[]).length);
+  if(asked&&!answer){$("answer").value="";$("clarify").style.display="flex"}
+}
+$("go").onclick=()=>go();
+$("send").onclick=()=>{const a=$("answer").value.trim();if(a)go(a)};
+</script>
+</body>
+</html>

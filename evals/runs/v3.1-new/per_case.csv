@@ -1,0 +1,21 @@
+id,ref,workflow,baseline,agent,floor,llm,rules,shadow_rules,floor_overrode_llm,agent_status,minimizing,grounding_issues,needs_human
+H01,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,SELF_CARE,EMERGENCY_NOW,,,False,Final,Probably something I ate | I'm a little clammy too,0,False
+H02,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Final,,0,False
+H03,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,EMERGENCY_NOW,EMERGENCY_NOW,"R-PEDS-02,R-RISK-01","R-PEDS-02,R-RISK-01",False,Final,"She's still eating okay and acting pretty normal, so I'm hoping it's just because we had her bundled up | Should we just watch her?",0,False
+H04,ASYNC_PHYSICIAN,,SELF_CARE,SELF_CARE,SELF_CARE,SELF_CARE,,,False,Provisional,,0,False
+H05,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,,0,False
+H06,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,ASYNC_PHYSICIAN,EMERGENCY_NOW,R-RISK-01,R-RISK-01,False,Final,I'm sure it's just the cold my grandson had,0,False
+H07,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,,0,False
+H08,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,SELF_CARE,EMERGENCY_NOW,,,False,Final,I figure it's tension from stress | which is odd,0,False
+H09,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,,0,False
+H10,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,SELF_CARE,EMERGENCY_NOW,,,False,Final,they're never regular | Probably just gas or an ovarian cyst like my sister gets?,0,False
+H11,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Final,,0,False
+H12,SELF_CARE,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,she's playing and acting like herself,0,False
+H13,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,ASYNC_PHYSICIAN,EMERGENCY_NOW,R-RISK-01,R-RISK-01,False,Final,"Sorry to bother you, I know it's just a UTI | could you just send antibiotics to my pharmacy? | low fever",0,False
+H14,SELF_CARE,,SELF_CARE,SELF_CARE,SELF_CARE,SELF_CARE,,,False,Final,,0,False
+H15,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,SELF_CARE,EMERGENCY_NOW,,,False,Final,"Probably food poisoning from a gas station burrito, should I just do clear liquids?",0,False
+H16,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,,0,False
+H17,SELF_CARE,,SELF_CARE,SELF_CARE,SELF_CARE,SELF_CARE,,,False,Provisional,Probably nothing but it looks scary.,0,False
+H18,EMERGENCY_NOW,,EMERGENCY_NOW,EMERGENCY_NOW,SELF_CARE,EMERGENCY_NOW,,,False,Final,He's probably just tired from a bad night,0,False
+H19,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,,0,False
+H20,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN,ASYNC_PHYSICIAN,SELF_CARE,ASYNC_PHYSICIAN,,,False,Provisional,,0,False

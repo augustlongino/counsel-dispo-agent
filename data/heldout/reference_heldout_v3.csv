@@ -1,0 +1,21 @@
+id,reference_label,status,clarify,clarify_questions,reviewer_notes,blind_label,revision,v2_label
+H01,EMERGENCY_NOW,Final,N,,Important to consider infectious and cardiac causes of symptoms in addition to metabolic ones.,SAME_DAY,2026-10-24 consensus revision after unblinding: SAME_DAY -> EMERGENCY_NOW (possible ACS with anginal equivalents in older diabetic woman; AHA/ACC 2021 chest pain guideline). Blind questions dropped per no-questions-in-emergencies policy.,EMERGENCY_NOW
+H02,ASYNC_PHYSICIAN,Final,N,,,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H03,EMERGENCY_NOW,Final,N,,,EMERGENCY_NOW,,EMERGENCY_NOW
+H04,ASYNC_PHYSICIAN,Provisional,Y,Any other joint or bone pain?,,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H05,ASYNC_PHYSICIAN,Provisional,Y,"Any lightheadedness, losing consciousness, or chest pain?","if there are symptoms suggesting cardiac insufficiency, escalate to emergency.",ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H06,EMERGENCY_NOW,Final,N,,concern for neutropenic fever,EMERGENCY_NOW,,EMERGENCY_NOW
+H07,ASYNC_PHYSICIAN,Provisional,Y,Any diarrhea,Will need to see a physician for Rx of antihelminthic.,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H08,EMERGENCY_NOW,Final,N,,Temporal arteritis,EMERGENCY_NOW,,EMERGENCY_NOW
+H09,ASYNC_PHYSICIAN,Final,N,,,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H10,EMERGENCY_NOW,Final,N,,C/f ectopic pregnancy vs ruptured ovarian cyst vs torsion- requires imaging,EMERGENCY_NOW,,EMERGENCY_NOW
+H11,ASYNC_PHYSICIAN,Final,N,,,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H12,SELF_CARE,Final,N,,,SELF_CARE,,SELF_CARE
+H13,EMERGENCY_NOW,Final,N,,"If urine output is lower than usual, Emergency room. [v3: questions dropped, no questions in emergencies: Have you seen any change in how much you are peeing?]",SAME_DAY,2026-10-25 v3 bucket change: SAME_DAY -> EMERGENCY_NOW (cannot safely wait 48 h).,SAME_DAY
+H14,SELF_CARE,Provisional,Y,Are you on any medicines that weaken your immune system? Do you have any history of a weakened immune system?,"If immunosuppressed, escalate to SAME_DAY",SELF_CARE,,SELF_CARE
+H15,EMERGENCY_NOW,Final,N,,,EMERGENCY_NOW,,EMERGENCY_NOW
+H16,ASYNC_PHYSICIAN,Final,N,,Patient needs to be seen to discuss dosage,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H17,SELF_CARE,Final,N,,,SELF_CARE,,SELF_CARE
+H18,EMERGENCY_NOW,Final,N,,,EMERGENCY_NOW,,EMERGENCY_NOW
+H19,ASYNC_PHYSICIAN,Provisional,Y,"B symptoms (weight loss, night sweats)?","If B symptoms, escalate to SAME_DAY",ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN
+H20,ASYNC_PHYSICIAN,Final,N,,,ASYNC_PHYSICIAN,,ASYNC_PHYSICIAN

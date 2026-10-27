@@ -1,0 +1,38 @@
+rule_id,floor,lane,criterion,sources,async_adaptation
+R-ACS-01,EMERGENCY_NOW,none,"Chest pressure with radiation, sweating, nausea or dyspnea",GULATI21,Guideline Class 1: patients with acute chest pain should call 9-1-1. No vitals needed.
+R-SAH-01,EMERGENCY_NOW,none,Thunderclap / worst-ever headache,HOH23,"Ottawa SAH rule requires exam; async uses symptom history only, so any thunderclap = emergency."
+R-STROKE-01,EMERGENCY_NOW,none,"New focal deficit, ongoing or resolved",EASTON09; KLEIN21; AHA_BEFAST,Resolved symptoms do not downgrade; symptom resolution is the minimizing-language trap.
+R-EYE-01,EMERGENCY_NOW,none,Sudden monocular vision loss,MACGRORY21,Treat as stroke equivalent; stroke-center ED.
+R-OB-01,EMERGENCY_NOW,none,Pregnancy >= 20 wk or early postpartum with preeclampsia features,ACOG222,BP unavailable async; symptoms alone meet the severe-features threshold for immediate L&D evaluation.
+R-OB-02,EMERGENCY_NOW,none,Early pregnancy with bleeding or pain (ectopic not excluded),ACEP_PREG17; ACOG193,"Ectopic not excluded until IUP confirmed. If prior ultrasound confirmed IUP, reviewer may downgrade to WITHIN_48H."
+R-CES-01,EMERGENCY_NOW,none,Back pain with bladder/bowel or saddle symptoms,GIRFT_CES,Symptom-only criteria; emergency MRI.
+R-VTE-01,EMERGENCY_NOW,none,Unilateral leg swelling/pain with VTE risk factor,LIM18; WELLS03,"ASH requires D-dimer/compression US before anticoagulation decisions but sets no venue. Async service cannot arrange same-day duplex, so ED is the only reliable route today."
+R-VTE-02,EMERGENCY_NOW,none,Possible PE,LIM18; KLINE04,"PERC needs HR and SpO2; async cannot apply PERC fully, so unknown vitals cannot rule out PE."
+R-GIB-01,EMERGENCY_NOW,none,"GI bleed with orthostasis, anticoagulant or age >= 60",LAINE21; BLATCH00,Glasgow-Blatchford needs Hb/BUN/BP; orthostatic symptoms are the async proxy for hemodynamic compromise.
+R-ANAPH-01,EMERGENCY_NOW,none,Anaphylaxis criteria,WAO20; SAMPSON06,Reply directs to 911.
+R-DKA-01,EMERGENCY_NOW,none,Hyperglycemia with vomiting / cannot hydrate,UMP24,No ketone/pH data async; inability to hydrate is the decisive feature.
+R-MEN-01,EMERGENCY_NOW,none,"Fever with meningism, petechiae or altered mental status",TUNKEL04; NICE_NG240,Glass test is patient-reportable; non-blanching rash + fever = 911.
+R-HEAD-01,EMERGENCY_NOW,none,Head injury on anticoagulant or with symptoms,NICE_NG232; JAGODA08,Anticoagulated head injury warrants CT regardless of symptoms.
+R-SBO-01,EMERGENCY_NOW,none,Bowel obstruction pattern,TENBROEK18,
+R-TORS-01,EMERGENCY_NOW,none,Sudden testicular pain,FRIEDMAN16,Time-critical (salvage falls after ~6 h); never use clarify path.
+R-HIP-01,EMERGENCY_NOW,none,"Fall, cannot bear weight (possible hip fracture)",AAOS_HIP21,Patient cannot self-transport; call EMS.
+R-VERT-02,EMERGENCY_NOW,none,Dizziness with central features,clinical judgment,"Central features (continuous vertigo, gait trouble, diplopia, new headache) suggest posterior circulation stroke."
+R-SUI-02,EMERGENCY_NOW,crisis,"Suicidal ideation with method, intent or plan",POSNER11; 988,Warm handoff to 988/911; do not end the conversation.
+R-PPMH-02,EMERGENCY_NOW,crisis,Postpartum psychosis features,ACOG_CCP4; 988,Postpartum psychosis is a psychiatric emergency.
+R-PPMH-01,EMERGENCY_NOW,crisis,Postpartum thoughts of harming infant or self,ACOG_CCP4; 988,Psychosis cannot be excluded async and infant safety is at stake.
+R-PEDS-02,EMERGENCY_NOW,none,Child < 5 with fever and a NICE red feature,NICE_NG143,
+R-PEDS-03,EMERGENCY_NOW,none,"Infant with fever and >= 2 amber features (reduced urine, poor feeding)",NICE_NG143,"NICE: amber = face-to-face assessment, urgency by clinical judgment. Combined dehydration signs in an infant tip the judgment to ED now."
+R-DFI-02,EMERGENCY_NOW,none,Diabetic foot infection with systemic signs,IWGDF23,
+R-COPD-02,EMERGENCY_NOW,none,COPD with dyspnea at rest or confusion,GOLD25; WEDZ17,
+R-HF-01,EMERGENCY_NOW,none,New-onset orthopnea/PND,HEID22,"New decompensated HF needs BNP, ECG, CXR, echo and possibly IV diuresis; cannot be started async."
+R-SUI-01,EMERGENCY_NOW,crisis,Passive suicidal ideation,POSNER11; 988,Immediate human outreach; reply includes 988. C-SSRS screener items 2-6 asked by the clinician.
+R-PEDS-01,EMERGENCY_NOW,none,Child < 5 with fever and a NICE amber feature,NICE_NG143,Traffic-light system was designed for remote assessment too; amber = face-to-face today.
+R-DFI-01,EMERGENCY_NOW,none,Diabetic foot infection,IWGDF23,"Severity grading (erythema > 2 cm, depth) needs an exam; cannot grade async."
+R-COPD-01,EMERGENCY_NOW,none,COPD exacerbation limiting minimal activity,GOLD25; WEDZ17,"Severity grading needs SpO2 and respiratory rate, which are unavailable async."
+R-PLEUR-01,EMERGENCY_NOW,none,Pleuritic chest pain; PERC vitals unavailable async,KLINE04; GULATI21,"PERC requires HR < 100 and SpO2 >= 95%. Async principle: unmeasured vitals count as positive, so PERC cannot rule out PE remotely."
+R-PPMH-03,WITHIN_48H,crisis,Postpartum depressive symptoms,ACOG_CCP4,EPDS/PHQ-9 and perinatal mental health contact within 48 h; crisis lane.
+R-HF-02,WITHIN_48H,none,"Known HF, worsening",HEID22,HF clinic review and diuretic adjustment within 48 h.
+R-TB-01,WITHIN_48H,none,"Presumptive TB (in-person, masked)",LEWIN17,"ATS/IDSA/CDC specify testing (CXR, sputum AFB/NAAT) but not timing; in-person within 48 h reflects infectiousness and household exposure."
+R-ANKLE-01,WITHIN_48H,none,Ankle injury; Ottawa item positive or not assessable,STIELL93,Ottawa needs palpation. Async principle: an item that cannot be assessed counts as positive.
+R-RISK-01,ASYNC_PHYSICIAN,none,"Symptom in a high-risk population (immunocompromised, cancer, pregnancy, infant < 3 mo)",clinical judgment,Benign-sounding symptoms are not safe to self-manage in these groups.
+R-VERT-01,ASYNC_PHYSICIAN,none,Positional vertigo needs clinician diagnosis,BHATT17,"Dix-Hallpike needs exam/video. Continuous vertigo, new headache, gait trouble, diplopia, or numbness -> EMERGENCY_NOW (posterior circulation stroke)."
